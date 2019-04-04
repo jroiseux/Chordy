@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.chord1(id="chord1") }}
+			{{ form.chord2(id="chord2") }}
+			{{ form.chord3(id="chord3") }}
+			{{ form.chord4(id="chord4") }}
+		</p>
+		<p>
+			{{ form.num1(id="num1") }}
+			{{ form.num2(id="num2") }}
+			{{ form.num3(id="num3") }}
+			{{ form.num4(id="num4") }}
+			{{ form.errors }}
+		</p>
+		<p>
+			{{ form.submit() }}
+		</p>
+	</form>
+	<a href="{{ url_for('chordsList') }}">Saved Chords</a>
+	<div class="row">
+		<div class="col-sm-1 offset-sm-1">
+			{{ form.keySelect(id="key") }}
+		</div>
+		<div class="col-sm-2">
+			<label class="checkbox-inline"><input type="checkbox" id="sharp" value="">Sharp</label>
+		</div>
+		<div class="col-sm-4">
+			<button class="btn btn-lg btn-success float-right" onclick="generateProgression()">Generate</button>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type=text/javascript src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock app_content %}	
