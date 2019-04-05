@@ -31,7 +31,7 @@ class Post(db.Model):
     pid = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(1000))
     date = db.Column(db.DateTime)
-    uid = db.Column(db.Integer, db.ForeignKey('users.uid'))
+    uid = db.Column(db.Integer, db.ForeignKey('users.id'))
     progid = db.Column(db.Integer)  # fk for saved progression
 
     def __repr__(self):
@@ -48,19 +48,19 @@ class Chord(db.Model):
         return '<chord {}>'.format(self.name)
 
 
-class KeyChord(db.Model):
-    __tablename__ = 'keychords'
-    kid = db.Column(db.Integer, db.ForeignKey('`keys`.kid'), primary_key=True)
-    cid = db.Column(db.Integer, db.ForeignKey('chords.cid'), primary_key=True)
+# class KeyChord(db.Model):
+#     __tablename__ = 'keychords'
+#     kid = db.Column(db.Integer, db.ForeignKey('keys.kid'), primary_key=True)
+#     cid = db.Column(db.Integer, db.ForeignKey('chords.cid'), primary_key=True)
+#
+#     def __repr__(self):
+#         return '<keychords {}>'.format(self.kid, self.cid)
 
-    def __repr__(self):
-        return '<keychords {}>'.format(self.kid, self.cid)
 
-
-class Key(db.Model):
-    __tablename__ = 'keys'
-    kid = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(10), unique=True)
+# class Key(db.Model):
+#     __tablename__ = 'keys'
+#     kid = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(10), unique=True)
 
 
 class Progression(db.Model):

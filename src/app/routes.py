@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, SignupForm, TestForm, EditForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Chord, Progression
@@ -94,14 +94,15 @@ def signupfunct():
 def editprog(editid):
     prog = Progression.query.get(editid)
     form = EditForm()
-    chord1 = Chord.query.filter_by(cid=prog.c1).first()
-    form.chord1.data = chord1.name
-    chord2 = Chord.query.filter_by(cid=prog.c2).first()
-    form.chord2.data = chord2.name
-    chord3 = Chord.query.filter_by(cid=prog.c3).first()
-    form.chord3.data = chord3.name
-    chord4 = Chord.query.filter_by(cid=prog.c4).first()
-    form.chord4.data = chord4.name
+    if request.method == 'GET':
+        chord1 = Chord.query.filter_by(cid=prog.c1).first()
+        form.chord1.data = chord1.name
+        chord2 = Chord.query.filter_by(cid=prog.c2).first()
+        form.chord2.data = chord2.name
+        chord3 = Chord.query.filter_by(cid=prog.c3).first()
+        form.chord3.data = chord3.name
+        chord4 = Chord.query.filter_by(cid=prog.c4).first()
+        form.chord4.data = chord4.name
     if form.validate_on_submit():
         c1 = form.chord1.data
         c2 = form.chord2.data
@@ -113,11 +114,8 @@ def editprog(editid):
         ch4 = Chord.query.filter_by(name=c4).first()
         progg = Progression.query.get(editid)
         progg.c1 = ch1.cid
-        # db.session.commit()
         progg.c2 = ch2.cid
-        # db.session.commit()
         progg.c3 = ch3.cid
-        # db.session.commit()
         progg.c4 = ch4.cid
         db.session.add(progg)
         db.session.commit()

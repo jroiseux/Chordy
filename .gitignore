@@ -1,0 +1,4 @@
+.venv
+.mysql_data
+*.pyc
+.idea

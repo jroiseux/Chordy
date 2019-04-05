@@ -19,8 +19,8 @@
              <td> {{ progression[2] }} </td>
              <td>{{ progression[3] }} </td>
              <td>{{ progression[4] }} </td>
-                <td><a href="{{ url_for('editprog',editid=progression[0]) }}">Edit</a><td>
-             <td><a href="{{ url_for('deleteprog',deleteid=progression[0]) }}">Delete</a><td>
+             <td><a href="{{ url_for('editprog',editid=progression[0]) }}">Edit</a></td>
+             <td><a href="{{ url_for('deleteprog',deleteid=progression[0]) }}">Delete</a></td>
             </tr>
          {% endfor %}
       </tbody>
