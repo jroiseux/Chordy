@@ -15,4 +15,3 @@ bootstrap = Bootstrap(app)
 # login.login_view = 'login'  # makes it so you have to be logged in
 
 from app import routes, models
-

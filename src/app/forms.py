@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectField, RadioField
 from wtforms.validators import DataRequired, ValidationError, EqualTo, Email
-from app.models import User
+from app.models import User, Key, Chord
 
 
 class LoginForm(FlaskForm):
@@ -49,16 +49,27 @@ class ChordGenForm(FlaskForm):
 
 
 class TestForm(FlaskForm):
-    chord1 = StringField("First Chord", validators=[DataRequired()])
-    chord2 = StringField("Second Chord", validators=[DataRequired()])
-    chord3 = StringField("Third Chord", validators=[DataRequired()])
-    chord4 = StringField("Fourth Chord", validators=[DataRequired()])
+    chord1 = StringField("Chord 1", validators=[DataRequired()])
+    chord2 = StringField("Chord 2", validators=[DataRequired()])
+    chord3 = StringField("Chord 3", validators=[DataRequired()])
+    chord4 = StringField("Chord 4", validators=[DataRequired()])
     submit = SubmitField('Save')
 
 
 class EditForm(FlaskForm):
-    chord1 = StringField("First", validators=[DataRequired()])
-    chord2 = StringField("Second", validators=[DataRequired()])
-    chord3 = StringField("Third", validators=[DataRequired()])
-    chord4 = StringField("Fourth", validators=[DataRequired()])
+    chordChoices = [(chord.cid, chord.name) for chord in Chord.query.all()]
+    chord1 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
+    chord2 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
+    chord3 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
+    chord4 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
+    # chord1 = StringField("Chord 1", validators=[DataRequired()])
+    # chord2 = StringField("Chord 2", validators=[DataRequired()])
+    # chord3 = StringField("Chord 3", validators=[DataRequired()])
+    # chord4 = StringField("Chord 4", validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class RandomForm(FlaskForm):
+    keyChoices = [(key.kid, key.name) for key in Key.query.all()]
+    chosenKey = SelectField('Select Key', choices=keyChoices)
+    submit = SubmitField('Generate Chords')

@@ -3,10 +3,24 @@
 
 	<form action="" method="post" novalidate>
 		{{ form.hidden_tag() }}
-        <p>
-            {{ form.chord1.label }} {{ form.chord2.label }} {{ form.chord3.label }} {{ form.chord4.label }}</br>
-            {{ form.chord1(size=32) }} {{ form.chord2(size=32) }} {{ form.chord3(size=32) }} {{ form.chord4(size=32) }}
-        </p>
+         <div class="chordform form-row align-items-center">
+            <div class="chordfield col-auto">
+            {{ form.chord1.label }}
+            {{ form.chord1(size=10, class_="form-control") }}
+            </div>
+            <div class="chordfield col-auto">
+            {{ form.chord2.label }}
+            {{ form.chord2(size=10, class_="form-control") }}
+            </div>
+            <div class="chordfield col-auto">
+            {{ form.chord3.label }}
+            {{ form.chord3(size=10, class_="form-control") }}
+            </div>
+            <div class="chordfield col-auto">
+            {{ form.chord4.label }}
+            {{ form.chord4(size=10, class_="form-control") }}
+            </div>
+        </div>
 		<p>
 			{{ form.submit() }}
 		</p>

@@ -1,15 +1,16 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} - Chordy</title>
-<!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <nav>
-  <ul>
+  <ul class="nav justify-content-end">
     {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('logoutfunct') }}">Log Out</a>
+        <li class="nav-item"><a class="nav-link" href="">{{ g.user['username'] }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('logoutfunct') }} ">Log Out</a></li>
     {% else %}
-      <li><a href="{{ url_for('signupfunct') }}">Register</a>
-      <li><a href="{{ url_for('login') }}">Log In</a>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('signupfunct') }}">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Log In</a></li>
     {% endif %}
   </ul>
 </nav>
