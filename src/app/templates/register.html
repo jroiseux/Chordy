@@ -1,20 +1,49 @@
 {% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-
 {% block app_content %}
-    <h1>Register</h1>
+      <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <form class="form form-horizontal" method="post" role="form">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign Up For Chordy</h5>
+            <form class="form-signin" method="post" role="form">
                 {{ form.hidden_tag() }}
-                {{ wtf.form_errors(form, hiddens="only") }}
+              <div class="form-label-group">
+                  {{ form.username(type="username", id="username", class="form-control", placeholder="User Name", autofocus=autofocus) }}
+                  {{ form.username.label(for="username") }}
+                  {% for error in form.username.errors %}
+                    <div class="alert alert-danger rounded mt-3">{{ error }}</div>
+                  {% endfor %}
+              </div>
+              <div class="form-label-group">
+                  {{ form.email(type="email", id="email", class="form-control", placeholder="E-mail") }}
+                  {{ form.email.label(for="email") }}
+                  {% for error in form.email.errors %}
+                    <div class="alert alert-danger rounded mt-3">{{ error }}</div>
+                  {% endfor %}
+              </div>
 
-                {{ wtf.form_field(form.username) }}
-                {{ wtf.form_field(form.email) }}
-                {{ wtf.form_field(form.password) }}
-                {{ wtf.form_field(form.password2) }}
-                {{ wtf.form_field(form.submit) }}
+              <div class="form-label-group">
+                  {{ form.password(type="password", id="password", class="form-control", placeholder="Password") }}
+                  {{ form.password.label(for="password") }}
+                  {% for error in form.password.errors %}
+                    <div class="alert alert-danger rounded mt-3">{{ error }}</div>
+                  {% endfor %}
+              </div>
+              <div class="form-label-group">
+                  {{ form.password2(type="password", id="confirmPassword", class="form-control", placeholder="Confirm Password") }}
+                  {{ form.password2.label(for="confirmPassword") }}
+                  {% for error in form.password2.errors %}
+                      <div class="alert alert-danger rounded mt-3">{{ error }}</div>
+                  {% endfor %}
+              </div>
+                {{ form.submit(class_="btn btn-lg btn-success btn-block text-uppercase") }}
+            <hr class="my-4">
+            <a class="btn btn-lg btn-secondary btn-block text-uppercase" href='/login'> Sign In</a>
             </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 {% endblock %}

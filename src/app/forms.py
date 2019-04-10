@@ -13,7 +13,7 @@ class LoginForm(FlaskForm):
 class SignupForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Re-enter Password', validators=[DataRequired(), EqualTo('password')])
+    password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Sign Up')
 
@@ -57,11 +57,10 @@ class TestForm(FlaskForm):
 
 
 class EditForm(FlaskForm):
-    chordChoices = [(chord.cid, chord.name) for chord in Chord.query.all()]
-    chord1 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
-    chord2 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
-    chord3 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
-    chord4 = SelectField('Select Key', choices=chordChoices, validators=[DataRequired()])
+    chord1 = SelectField('Chord 1', coerce=int, validators=[DataRequired()])
+    chord2 = SelectField('Chord 2', coerce=int, validators=[DataRequired()])
+    chord3 = SelectField('Chord 3', coerce=int, validators=[DataRequired()])
+    chord4 = SelectField('Chord 4', coerce=int, validators=[DataRequired()])
     # chord1 = StringField("Chord 1", validators=[DataRequired()])
     # chord2 = StringField("Chord 2", validators=[DataRequired()])
     # chord3 = StringField("Chord 3", validators=[DataRequired()])
@@ -70,6 +69,5 @@ class EditForm(FlaskForm):
 
 
 class RandomForm(FlaskForm):
-    keyChoices = [(key.kid, key.name) for key in Key.query.all()]
-    chosenKey = SelectField('Select Key', choices=keyChoices)
+    chosenKey = SelectField('Select a Key', coerce=int)
     submit = SubmitField('Generate Chords')

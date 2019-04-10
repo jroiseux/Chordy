@@ -10,3 +10,4 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'mysql://myuser:password@mysql:3306/mydb'  # this is where the location of the db is passed in
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    TEMPLATE_AUTO_RELOAD = True

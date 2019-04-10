@@ -1,17 +1,37 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>Sign In</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Sign In</h5>
+          <form class="form-signin" method="post">
+              {{ form.hidden_tag() }}
+
+            <div class="form-label-group">
+                {{ form.username(type="username", id="username", class="form-control", placeholder="User Name", autofocus=autofocus) }}
+                {{ form.username.label(for="username") }}
+                 {% for error in form.username.errors %}
+                    <div class="alert alert-danger rounded mt-3">{{ error }}</div>
+                 {% endfor %}
+            </div>
+            <div class="form-label-group">
+                {{ form.password(type="password", id="password", class="form-control", placeholder="Password") }}
+                {{ form.password.label(for="password") }}
+                {% for error in form.password.errors %}
+                    <div class="alert alert-danger rounded mt-3">{{ error }}</div>
+                {% endfor %}
+            </div>
+              {{ form.submit(class_="btn btn-lg btn-primary btn-block text-uppercase") }}
+            <hr class="my-4">
+            <a class="btn btn-lg btn-secondary btn-block text-uppercase" href='/signup'> Sign Up</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock app_content %}
+

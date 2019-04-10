@@ -114,11 +114,6 @@ body {
   color: #777;
 }
 
-/*.chordform {*/
-/*  width: 100%;*/
-/*}*/
-
-/*.chordfield {*/
-/*  width: 25%;*/
-/*  float: left;*/
-/*}*/
+.mybtn {
+  text-transform: uppercase;
+}

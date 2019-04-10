@@ -8,7 +8,10 @@ import random
 
 @app.before_request
 def before_request():
-    g.user = current_user
+    if current_user.is_authenticated:
+        g.user = current_user
+    else:
+        g.user = None
 
 
 @login.unauthorized_handler
@@ -21,7 +24,24 @@ def unauthorized_callback():
 @login_required
 def index():
     form = TestForm()
+    keyChoices = [(key.kid, key.name) for key in Key.query.all()]
     selectform = RandomForm()
+    selectform.chosenKey.choices = keyChoices
+    if selectform.validate_on_submit():
+        chords = KeyChord.query.filter_by(kid=selectform.data.get('chosenKey')).all()
+        returnchords = []
+        while len(returnchords) <= 4:
+            rand = random.choice(chords)
+            returnchords.append(rand.cid)
+        fchord = Chord.query.filter_by(cid=returnchords[0]).first()
+        form.chord1.default = fchord.name
+        schord = Chord.query.filter_by(cid=returnchords[1]).first()
+        form.chord2.default = schord.name
+        tchord = Chord.query.filter_by(cid=returnchords[2]).first()
+        form.chord3.default = tchord.name
+        fchord = Chord.query.filter_by(cid=returnchords[3]).first()
+        form.chord4.default = fchord.name
+        form.process()
     if form.validate_on_submit():
         c1 = form.chord1.data
         c2 = form.chord2.data
@@ -40,26 +60,26 @@ def index():
     return render_template('testhome.html', title='Home', form=form, form2=selectform)
 
 
-@app.route('/genchords/<val>', methods=['GET', 'POST'])
+@app.route('/genchords', methods=['GET', 'POST'])
 @login_required
 def genchords(val):
     form = TestForm()
     selectform = RandomForm()
-    if request.method == 'GET':
-        chords = KeyChord.query.filter_by(kid=val).all()
-        returnchords = []
-        print(chords)
-        while len(returnchords) <= 4:
-            rand = random.choice(chords)
-            returnchords.append(rand.cid)
-        fchord = Chord.query.filter_by(cid=returnchords[0]).first()
-        form.chord1.data = fchord.name
-        schord = Chord.query.filter_by(cid=returnchords[1]).first()
-        form.chord2.data = schord.name
-        tchord = Chord.query.filter_by(cid=returnchords[2]).first()
-        form.chord3.data = tchord.name
-        fchord = Chord.query.filter_by(cid=returnchords[3]).first()
-        form.chord4.data = fchord.name
+    # if request.method == 'GET':
+    #     chords = KeyChord.query.filter_by(kid=val).all()
+    #     returnchords = []
+    #     print(chords)
+    #     while len(returnchords) <= 4:
+    #         rand = random.choice(chords)
+    #         returnchords.append(rand.cid)
+    #     fchord = Chord.query.filter_by(cid=returnchords[0]).first()
+    #     form.chord1.data = fchord.name
+    #     schord = Chord.query.filter_by(cid=returnchords[1]).first()
+    #     form.chord2.data = schord.name
+    #     tchord = Chord.query.filter_by(cid=returnchords[2]).first()
+    #     form.chord3.data = tchord.name
+    #     fchord = Chord.query.filter_by(cid=returnchords[3]).first()
+    #     form.chord4.data = fchord.name
     if form.validate_on_submit():
         c1 = form.chord1.data
         c2 = form.chord2.data
@@ -138,8 +158,13 @@ def signupfunct():
 @app.route('/editprog/<editid>', methods=['GET', 'POST'])
 @login_required
 def editprog(editid):
+    chordChoices = [(chord.cid, chord.name) for chord in Chord.query.all()]
     prog = Progression.query.get(editid)
     form = EditForm()
+    form.chord1.choices = chordChoices
+    form.chord2.choices = chordChoices
+    form.chord3.choices = chordChoices
+    form.chord4.choices = chordChoices
     if request.method == 'GET':
         chord1 = Chord.query.filter_by(cid=prog.c1).first()
         form.chord1.default = chord1.cid
@@ -151,18 +176,10 @@ def editprog(editid):
         form.chord4.default = chord4.cid
         form.process()
     if form.validate_on_submit():
-        c1 = form.chord1.data
-        c2 = form.chord2.data
-        c3 = form.chord3.data
-        c4 = form.chord4.data
-        ch1 = Chord.query.filter_by(name=c1).first()
-        ch2 = Chord.query.filter_by(name=c2).first()
-        ch3 = Chord.query.filter_by(name=c3).first()
-        ch4 = Chord.query.filter_by(name=c4).first()
-        prog.c1 = ch1.cid
-        prog.c2 = ch2.cid
-        prog.c3 = ch3.cid
-        prog.c4 = ch4.cid
+        prog.c1 = form.chord1.data
+        prog.c2 = form.chord2.data
+        prog.c3 = form.chord3.data
+        prog.c4 = form.chord4.data
         db.session.commit()
         return redirect(url_for('chordsList'))
     else:

@@ -6,17 +6,13 @@
 <nav>
   <ul class="nav justify-content-end">
     {% if g.user %}
-        <li class="nav-item"><a class="nav-link" href="">{{ g.user['username'] }}</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('logoutfunct') }} ">Log Out</a></li>
-    {% else %}
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('signupfunct') }}">Register</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Log In</a></li>
+        <li class="nav-item"><a class="nav-link mybtn btn m-1" href="">{{ g.user['username'] }}</a></li>
+        <li class="nav-item"><a class="nav-link mybtn btn m-1" href="{{ url_for('index') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link mybtn btn m-1" href="{{ url_for('chordsList') }}">Saved Chords</a></li>
+        <li class="nav-item"><a class="nav-link mybtn btn m-1" href="{{ url_for('logoutfunct') }}">Log Out</a></li>
     {% endif %}
   </ul>
 </nav>
 <section class="content">
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
   {% block app_content %}{% endblock app_content %}
 </section>
